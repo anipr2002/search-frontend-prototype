@@ -44,24 +44,30 @@ const SearchBar = () => {
 
       const partialName = inputRef.current?.value as string;
 
-      const suggestions = getAutocompleteSuggestions({
-        websiteData,
-        input: partialName,
-      });
+      if (partialName.length > 2) {
+        const suggestions = getAutocompleteSuggestions({
+          websiteData,
+          input: partialName,
+        });
 
-      const matched = suggestions.length > 0 ? suggestions[0] : null;
+        const matched = suggestions.length > 0 ? suggestions[0] : null;
 
-      if (matched) {
-        // Set the completed website name
-        setWebsiteName(matched.name);
-        // Set the color theme based on the completed website name
-        getColorTheme(matched.colorTheme as string);
-        // console.log(colorTheme);
-        setMatchedWebsite(null);
-      }
+        if (matched) {
+          // Set the completed website name
+          setWebsiteName(matched.name);
+          // Set the color theme based on the completed website name
+          getColorTheme(matched.colorTheme as string);
+          // console.log(colorTheme);
+          setMatchedWebsite(null);
+        }
 
-      //if no matched website, set the website name to Google and partial name to search query
-      if (!matched) {
+        //if no matched website, set the website name to Google and partial name to search query
+        if (!matched) {
+          setWebsiteName("google");
+          setColorTheme("google");
+          setSearchQuery(partialName);
+        }
+      } else if (partialName.length <= 2) {
         setWebsiteName("google");
         setColorTheme("google");
         setSearchQuery(partialName);
@@ -69,11 +75,13 @@ const SearchBar = () => {
 
       inputRef.current?.focus();
       getColorTheme(inputRef.current?.value as string);
+
       //   console.log(colorTheme);
     } else if (e.key === "Escape") {
       setTabPressed(false);
-      setWebsiteName("Enter Website");
-      //   setMatchedWebsite(null);
+      // setWebsiteName("Enter Website");
+      setSearchQuery("");
+      setMatchedWebsite(null);
       setColorTheme("#8D9093");
       inputRef.current?.focus();
     } else if (e.key === "Enter") {
@@ -137,9 +145,14 @@ const SearchBar = () => {
           boxShadow: `0 0 5px ${colorTheme}, 0 0 15px ${colorTheme}`,
         }}
       >
-        {!tabpressed && (
-          <div>
+        {!tabpressed && !matchedWebsite && (
+          <div className="ml-4">
             <Search size={24} color="black" />
+          </div>
+        )}
+        {!tabpressed && matchedWebsite && (
+          <div className="ml-4" style={{ color: matchedWebsite.colorTheme }}>
+            <Icons name={matchedWebsite.name.toLowerCase()} size={24} />
           </div>
         )}
 

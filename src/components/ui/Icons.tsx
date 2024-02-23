@@ -17,23 +17,24 @@ import {
 
 interface IconsProps {
   name: string;
+  size?: number;
 }
 
-const Icons: React.FC<IconsProps> = ({ name }) => {
+const Icons: React.FC<IconsProps> = ({ name, size }) => {
   // Define a mapping of website names to Lucide icons
   const iconMap: { [key: string]: React.ReactElement } = {
-    google: <FaGoogle />,
-    facebook: <FaFacebook />,
-    twitter: <FaTwitter />,
-    linkedin: <FaLinkedin />,
-    youtube: <FaYoutube />,
-    instagram: <FaInstagram />,
-    pinterest: <FaPinterest />,
-    twitch: <FaTwitch />,
-    reddit: <FaReddit />,
-    amazon: <FaAmazon />,
-    wikipedia: <FaWikipediaW />,
-    spotify: <FaSpotify />,
+    google: <FaGoogle size={size} />,
+    facebook: <FaFacebook size={size} />,
+    twitter: <FaTwitter size={size} />,
+    linkedin: <FaLinkedin size={size} />,
+    youtube: <FaYoutube size={size} />,
+    instagram: <FaInstagram size={size} />,
+    pinterest: <FaPinterest size={size} />,
+    twitch: <FaTwitch size={size} />,
+    reddit: <FaReddit size={size} />,
+    amazon: <FaAmazon size={size} />,
+    wikipedia: <FaWikipediaW size={size} />,
+    spotify: <FaSpotify size={size} />,
   };
 
   // Get the icon based on the provided website name
