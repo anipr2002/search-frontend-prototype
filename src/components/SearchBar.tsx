@@ -38,7 +38,7 @@ const SearchBar = () => {
   const handleKeyPress = async (
     e: React.KeyboardEvent<HTMLInputElement>
   ): Promise<void> => {
-    if (e.key === "Tab") {
+    if (e.key === "Tab" && !tabpressed) {
       e.preventDefault();
       setTabPressed(true);
 
