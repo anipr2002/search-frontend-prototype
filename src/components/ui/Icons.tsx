@@ -13,6 +13,7 @@ import {
   FaAmazon,
   FaWikipediaW,
   FaSpotify,
+  FaSearch,
 } from "react-icons/fa";
 
 interface IconsProps {
@@ -42,8 +43,7 @@ const Icons: React.FC<IconsProps> = ({ name, size }) => {
 
   // If the provided name doesn't match any known icon, you can provide a default icon or handle it as needed
   if (!selectedIcon) {
-    // You can return a default icon or null, or handle the case in a way that makes sense for your application
-    return null;
+    return <FaSearch size={size} />;
   }
 
   return selectedIcon;
