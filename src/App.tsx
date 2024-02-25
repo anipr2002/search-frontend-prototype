@@ -1,8 +1,10 @@
-import SearchBar from "./components/SearchBar";
+import Settings from "./components/Settings";
+import { ModalProvider } from "./providers/modal-provider";
 const App = () => {
   return (
     <>
-      <SearchBar />
+      <ModalProvider />
+      <Settings />
     </>
   );
 };
