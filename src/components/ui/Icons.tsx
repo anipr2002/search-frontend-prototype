@@ -15,6 +15,7 @@ import {
   FaSpotify,
   FaSearch,
 } from "react-icons/fa";
+import { SiNetflix } from "react-icons/si";
 
 interface IconsProps {
   name: string;
@@ -36,6 +37,7 @@ const Icons: React.FC<IconsProps> = ({ name, size }) => {
     amazon: <FaAmazon size={size} />,
     wikipedia: <FaWikipediaW size={size} />,
     spotify: <FaSpotify size={size} />,
+    netflix: <SiNetflix size={size} />,
   };
 
   // Get the icon based on the provided website name

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import SettingsModal from "../components/SettingsModal";
+import SettingsModal from "../components/modals/SettingsModal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);

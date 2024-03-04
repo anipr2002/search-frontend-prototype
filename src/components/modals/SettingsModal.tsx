@@ -1,6 +1,7 @@
-import { Dialog, DialogContent, DialogHeader } from "./ui/dialog";
-import { useSettings } from "../store/use-settings";
-import { Label } from "./ui/label";
+import { Dialog, DialogContent, DialogHeader } from "../ui/dialog";
+import { useSettings } from "../../store/use-settings";
+import { Label } from "../ui/label";
+import { ModeToggle } from "./ModeToggle";
 
 const SettingsModal = () => {
   const settings = useSettings();
@@ -30,6 +31,7 @@ const SettingsModal = () => {
             <span className="text-[0.8rem] text-muted-foreground font-sans">
               Customize the font size and style
             </span>
+            <ModeToggle />
           </div>
         </div>
       </DialogContent>

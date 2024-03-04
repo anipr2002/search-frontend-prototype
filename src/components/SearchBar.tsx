@@ -6,6 +6,7 @@ import websiteData from "../assets/websites.json";
 import { Website } from "../types/website";
 import useStore from "../store/store";
 import { getAutocompleteSuggestions } from "../helper/autocompleteHelper";
+import { useTheme } from "../store/theme-store";
 
 const SearchBar = () => {
   const {
@@ -20,6 +21,8 @@ const SearchBar = () => {
     matchedWebsite,
     setMatchedWebsite,
   } = useStore();
+
+  const { fontFamily } = useTheme();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -85,6 +88,9 @@ const SearchBar = () => {
       setColorTheme("#8D9093");
       inputRef.current?.focus();
     } else if (e.key === "Enter") {
+      if (searchQuery === "") {
+        redirectToWebsiteName(); // redirect to website without search query
+      }
       redirectToWebsite();
     } else if (e.key === "Backspace") {
       setMatchedWebsite(null);
@@ -112,14 +118,28 @@ const SearchBar = () => {
 
   //useEffect for tab to matched website
 
-  const constructWebsiteURL = (url: string, searchQuery: string): string => {
+  const constructWebsiteURL = (
+    SearchURL: string,
+    searchQuery: string
+  ): string => {
+    const website: Website = websiteData.find(
+      (website) => website.name.toLowerCase() === SearchURL.toLowerCase()
+    ) as Website;
+    if (website) {
+      return website.SearchURL + searchQuery;
+    } else {
+      return "https://www.google.com/search?q=" + websiteName + searchQuery;
+    }
+  };
+
+  const contructWebsite = (url: string): string => {
     const website: Website = websiteData.find(
       (website) => website.name.toLowerCase() === url.toLowerCase()
     ) as Website;
     if (website) {
-      return website.url + searchQuery;
+      return website.url;
     } else {
-      return "https://www.google.com/search?q=" + websiteName + searchQuery;
+      return "https://www.google.com";
     }
   };
 
@@ -129,8 +149,18 @@ const SearchBar = () => {
 
   const redirectToWebsite = (): void => {
     if (isValidWebsiteName(websiteName)) {
-      const url: string = constructWebsiteURL(websiteName, searchQuery);
-      window.open(url, "_blank");
+      const SearchURL: string = constructWebsiteURL(websiteName, searchQuery);
+      window.open(SearchURL, "_blank");
+    } else {
+      alert("Please enter a valid website name");
+      console.error("Please enter a valid website name");
+    }
+  };
+
+  const redirectToWebsiteName = (): void => {
+    if (isValidWebsiteName(websiteName)) {
+      const URL: string = contructWebsite(websiteName);
+      window.open(URL, "_blank");
     } else {
       alert("Please enter a valid website name");
       console.error("Please enter a valid website name");
@@ -138,7 +168,10 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="w-screen h-screen px-96 flex items-center justify-center">
+    <div
+      className="w-screen h-screen px-96 flex items-center justify-center"
+      style={{ fontFamily: `${fontFamily}` }}
+    >
       <div
         className={`w-full h-20  rounded-xl gap-5 flex items-center px-4`}
         style={{
